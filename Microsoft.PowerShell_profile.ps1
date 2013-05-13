@@ -7,6 +7,8 @@
 # Variables
 ###############################################################################
 $user = $env:username
+$hname=$env:computername
+$Host.UI.RawUI.WindowTitle = "PowerShell on $hname as $user"
 
 ###############################################################################
 # Functions
@@ -27,9 +29,9 @@ function Get-Tools
 function Edit-File
 {
 	$file = $args[0]
-	if(Test-Path "C:\Users\Will_Rideout\Dropbox\Tools\Notepad++\notepad++.exe")
+	if(Test-Path "C:\Users\$user\Dropbox\Tools\Notepad++\notepad++.exe")
     {
-        C:\Users\Will_Rideout\Dropbox\Tools\Notepad++\notepad++.exe $file
+        & "C:\Users\$user\Dropbox\Tools\Notepad++\notepad++.exe" $file
     }
 	else
 	{
