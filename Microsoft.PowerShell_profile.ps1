@@ -83,3 +83,4 @@ Set-Alias touch Touch-File
 Set-Alias tools Get-Tools
 Set-Alias edit Edit-File
 Set-Alias wget Get-WebObject
+Set-Alias la Get-Content -force
