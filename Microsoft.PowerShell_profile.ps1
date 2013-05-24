@@ -1,16 +1,26 @@
 ################################################################################
 # Windows PowerShell configuration
 #
+# Place this file in Documets\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+# Don't forget to execute Set-ExecutionPolicy accordingly!
+#
+# Also, don't forget to check out the PowerShell Community Extensions!
+#
 # Author: William Rideout
 # 5/13/2013
 ################################################################################
+
+# Set up the community extensions
+Import-Module Pscx
+#Enable-OpenPowerShellHere
 
 ################################################################################
 # Variables
 ################################################################################
 $user = $env:username
 $hname=$env:computername
-$Host.UI.RawUI.WindowTitle = "PowerShell on $hname as $user"
+$Host.UI.RawUI.WindowTitle = 'PowerShell on $hname as $user'
+$Pscx:Preferences['TextEditor'] = 'C:\Program Files (x86)\Notepad++\notepad++'
 
 ################################################################################
 # Functions
@@ -19,26 +29,12 @@ function Get-Tools
 {
 	if(Test-Path W:\tools)
 	{
-		cd W:\tools
-		ls
+		Set-Location W:\tools
+		Get-ChildItem
 	}
 	else
 	{
 		throw "Mount point W:\ does not exist"
-	}
-}
-
-function Edit-File
-{
-	$file = $args[0]
-	if(Test-Path "C:\Users\$user\Dropbox\Tools\Notepad++\notepad++.exe")
-	{
-        	& "C:\Program Files (x86)\Notepad++\notepad++.exe" $file
-    	}
-	else
-	{
-		# default to using notepad if notepad++ is not installed
-		notepad $file
 	}
 }
 
@@ -119,10 +115,12 @@ function Change-Directory
 ################################################################################
 # Aliases
 ################################################################################
-Set-Alias touch Touch-File
 Set-Alias tools Get-Tools
-Set-Alias edit Edit-File
 Set-Alias wget Get-WebObject
+
+# Replace the touch alias with our own
+Remove-Item Alias:touch
+Set-Alias touch Touch-File
 
 # Replace the cd alias with our own
 Remove-Item Alias:cd
